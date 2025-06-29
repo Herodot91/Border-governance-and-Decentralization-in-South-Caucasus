@@ -1,0 +1,30 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# Define borderland regions and their decentralization potential
+data = {
+    "Border Region": ["Abkhazia", "South Ossetia", "Adjara", "Nagorno-Karabakh", "Nakhchivan"],
+    "Step 1": [9, 9, 5, 10, 6],
+    "Step 2": [9, 9, 6, 10, 6],
+    "Step 3": [9, 9, 7, 10, 6],
+}
+
+# Convert to DataFrame
+df = pd.DataFrame(data)
+df.set_index("Border Region", inplace=True)
+
+# Plot the decentralization potential
+plt.figure(figsize=(10, 6))
+for region in df.index:
+    plt.plot(df.columns, df.loc[region], marker='o', label=region)
+
+plt.title("Decentralization Potential in Border Regions (Stepwise Assessment)")
+plt.xlabel("Governance Step")
+plt.ylabel("Decentralization Potential (1 = low, 10 = high)")
+plt.ylim(0, 11)
+plt.legend()
+plt.grid(True)
+plt.show()
+
+# Show the data table
+df

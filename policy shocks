@@ -1,0 +1,42 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# Decentralization values
+decentralization = {
+    "Region": ["Abkhazia", "South Ossetia", "Adjara", "Nagorno-Karabakh", "Nakhchivan"],
+    "Step 1": [9, 9, 5, 10, 6],
+    "Step 2": [8, 10, 6, 10, 6],
+    "Step 3": [8, 10, 7, 9, 6],
+}
+
+# Policy shocks affecting the region
+shocks = {
+    "Region": ["Abkhazia", "South Ossetia", "Adjara", "Nagorno-Karabakh", "Nakhchivan"],
+    "Step 1": ["N", "N", "N", "W", "N"],
+    "Step 2": ["P", "W", "P", "W", "N"],
+    "Step 3": ["N", "N", "P", "P", "N"],
+}
+
+# Create DataFrames
+df = pd.DataFrame(decentralization).set_index("Region")
+shock_df = pd.DataFrame(shocks).set_index("Region")
+
+# Plot
+plt.figure(figsize=(10, 6))
+for region in df.index:
+    plt.plot(df.columns, df.loc[region], marker='o', label=f"{region} (Shocks: {', '.join(shock_df.loc[region])})")
+
+plt.title("Decentralization Potential with Policy Shocks")
+plt.xlabel("Time Step")
+plt.ylabel("Decentralization Potential (1 = low, 10 = high)")
+plt.ylim(0, 11)
+plt.legend()
+plt.grid(True)
+plt.show()
+
+# Combine and show as table
+combined = df.copy()
+combined["Shocks Step 1"] = shock_df["Step 1"]
+combined["Shocks Step 2"] = shock_df["Step 2"]
+combined["Shocks Step 3"] = shock_df["Step 3"]
+combined
